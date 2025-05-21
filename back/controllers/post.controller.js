@@ -46,15 +46,14 @@ async function moderateImageContent(imageUrl, res) {
 }
 
 function deletePostFromDb(post_id, res) {
-  const sql = `DELETE FROM posts WHERE id = ${post_id}`;
-
-  db.query(sql, (err, result) => {
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
-    }
-    res.status(200).json(result);
-  });
+  // const sql = `DELETE FROM posts WHERE id = ${post_id}`;
+  // db.query(sql, (err, result) => {
+  //   if (err) {
+  //     res.status(404).json({ err });
+  //     throw err;
+  //   }
+  //   res.status(200).json(result);
+  // });
 }
 
 exports.createPost = async (req, res, next) => {
@@ -78,14 +77,14 @@ exports.createPost = async (req, res, next) => {
     const sql =
       "INSERT INTO posts (user_id, content, attachment, video) VALUES ($1, $2, $3, $4)";
 
-    db.query(sql, post, (error, result) => {
-      if (error) {
-        console.error(error);
-        res.status(500).json({ error: "Erreur lors de la création du post." });
-      } else {
-        res.status(201).json({ message: "Votre message a bien été posté !" });
-      }
-    });
+    // db.query(sql, post, (error, result) => {
+    //   if (error) {
+    //     console.error(error);
+    //     res.status(500).json({ error: "Erreur lors de la création du post." });
+    //   } else {
+    //     res.status(201).json({ message: "Votre message a bien été posté !" });
+    //   }
+    // });
   } catch (error) {
     console.error(
       "Erreur dans le processus de modération ou lors de l'insertion :",

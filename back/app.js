@@ -15,12 +15,6 @@ app.use(express.json());
 
 //-------Routes---------------
 
-app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes);
-app.use("/api/post", postRoutes);
-app.use("/api/comment", commentRoutes);
-app.use("/api/like", likeRoutes);
-
 app.use((req, res, next) => {
   if (req.method !== "GET") {
     return res
@@ -29,5 +23,10 @@ app.use((req, res, next) => {
   }
   next();
 });
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/post", postRoutes);
+app.use("/api/comment", commentRoutes);
+app.use("/api/like", likeRoutes);
 
 module.exports = app;

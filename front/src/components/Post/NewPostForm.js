@@ -90,6 +90,16 @@ const NewPostForm = ({ getPosts }) => {
             timer: 3000,
             timerProgressBar: true,
           });
+        } else if (err.response && err.response.status === 403) {
+          Swal.fire({
+            toast: true,
+            position: "bottom-right",
+            icon: "warning",
+            text: "Mode démo actif : vous ne pouvez pas modifier les données.",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+          });
         } else {
           console.error("Erreur Axios :", err.message);
         }
