@@ -158,29 +158,29 @@ exports.updatePost = async (req, res, next) => {
   console.log("file", file);
   const sql = "UPDATE posts SET content = $1, attachment = $2 WHERE id = $3";
 
-  db.query(sql, [content, file, postId], (err, result) => {
-    if (err) {
-      console.error("Erreur lors de la mise à jour du post :", err);
-      return res.status(404).json({ err });
-    }
-    if (result) {
-      return res.status(200).json(result);
-    }
-  });
+  // db.query(sql, [content, file, postId], (err, result) => {
+  //   if (err) {
+  //     console.error("Erreur lors de la mise à jour du post :", err);
+  //     return res.status(404).json({ err });
+  //   }
+  //   if (result) {
+  //     return res.status(200).json(result);
+  //   }
+  // });
 };
 
 exports.deleteOnePost = (req, res, next) => {
   const post_id = req.params.id;
   const selectSql = "SELECT attachment FROM posts WHERE id = $1";
 
-  db.query(selectSql, [post_id], (err, result) => {
-    const attachmentUrl = result.rows[0].attachment;
+  // db.query(selectSql, [post_id], (err, result) => {
+  //   const attachmentUrl = result.rows[0].attachment;
 
-    if (attachmentUrl) {
-      deleteImage(attachmentUrl);
-      deletePostFromDb(post_id, res);
-    } else {
-      deletePostFromDb(post_id, res);
-    }
-  });
+  //   if (attachmentUrl) {
+  //     deleteImage(attachmentUrl);
+  //     deletePostFromDb(post_id, res);
+  //   } else {
+  //     deletePostFromDb(post_id, res);
+  //   }
+  // });
 };

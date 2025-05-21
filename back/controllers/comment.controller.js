@@ -32,14 +32,14 @@ exports.createComment = async (req, res) => {
       VALUES ($1, $2, $3) 
       RETURNING *;
     `;
-    db.query(sql, [user_id, post_id, content], (err, result) => {
-      if (err) {
-        res.status(404).json({ err });
-        console.log(err);
-        throw err;
-      }
-      res.status(200).json(result);
-    });
+    // db.query(sql, [user_id, post_id, content], (err, result) => {
+    //   if (err) {
+    //     res.status(404).json({ err });
+    //     console.log(err);
+    //     throw err;
+    //   }
+    //   res.status(200).json(result);
+    // });
   } catch (error) {
     console.error(
       "Erreur dans le processus de modération ou lors de l'insertion :",
@@ -107,15 +107,15 @@ exports.updateComment = async (req, res, next) => {
 
     const sql = `UPDATE comments SET content = $1 WHERE id = $2;`;
 
-    db.query(sql, [content, comment_id], (err, result) => {
-      if (err) {
-        res.status(404).json({ err });
-        throw err;
-      }
-      if (result) {
-        res.status(200).json(result);
-      }
-    });
+    // db.query(sql, [content, comment_id], (err, result) => {
+    //   if (err) {
+    //     res.status(404).json({ err });
+    //     throw err;
+    //   }
+    //   if (result) {
+    //     res.status(200).json(result);
+    //   }
+    // });
   } catch (error) {
     console.error(
       "Erreur dans le processus de modération ou lors de l'insertion :",
@@ -130,11 +130,11 @@ exports.updateComment = async (req, res, next) => {
 exports.deleteOneComment = (req, res) => {
   const comment_id = req.params.id;
   const sql = `DELETE FROM comments WHERE comments.id = $1`;
-  db.query(sql, [comment_id], (err, result) => {
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
-    }
-    res.status(200).json(result);
-  });
+  // db.query(sql, [comment_id], (err, result) => {
+  //   if (err) {
+  //     res.status(404).json({ err });
+  //     throw err;
+  //   }
+  //   res.status(200).json(result);
+  // });
 };
