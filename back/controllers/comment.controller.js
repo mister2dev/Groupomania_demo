@@ -1,5 +1,7 @@
-const db = require("../config/db");
+// const db = require("../config/db");
 const { moderateText } = require("../services/moderationServicePerspective");
+const fs = require("fs");
+const path = require("path");
 
 async function moderateTextContent(content, res) {
   const moderationResult = await moderateText(content);
@@ -49,27 +51,49 @@ exports.createComment = async (req, res) => {
   }
 };
 
+// exports.getAllComments = (req, res) => {
+//   const sql = `SELECT * FROM comments`;
+//   db.query(sql, (err, result) => {
+//     if (err) {
+//       res.status(404).json({ err });
+//       throw err;
+//     }
+//     res.status(200).json(result.rows);
+//   });
+// };
+
 exports.getAllComments = (req, res) => {
-  const sql = `SELECT * FROM comments`;
-  db.query(sql, (err, result) => {
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
-    }
-    res.status(200).json(result.rows);
-  });
+  const comments = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../database/comments.json"), "utf-8")
+  );
+
+  const reversedComments = [...comments].reverse();
+
+  res.status(200).json(reversedComments);
 };
 
+// exports.getOneComment = (req, res) => {
+//   const comment_id = req.params.id;
+//   const sql = `SELECT * FROM comments WHERE comments.post_id = $1`;
+//   db.query(sql, [comment_id], (err, result) => {
+//     if (err) {
+//       res.status(404).json({ err });
+//       throw err;
+//     }
+//     res.status(200).json(result.rows);
+//   });
+// };
+
 exports.getOneComment = (req, res) => {
-  const comment_id = req.params.id;
-  const sql = `SELECT * FROM comments WHERE comments.post_id = $1`;
-  db.query(sql, [comment_id], (err, result) => {
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
-    }
-    res.status(200).json(result.rows);
-  });
+  const postId = parseInt(req.params.id, 10);
+
+  const comments = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../database/comments.json"), "utf-8")
+  );
+
+  const relatedComments = comments.filter((c) => c.post_id === postId);
+
+  res.status(200).json(relatedComments);
 };
 
 exports.updateComment = async (req, res, next) => {

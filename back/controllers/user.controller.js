@@ -1,4 +1,4 @@
-const db = require("../config/db");
+// const db = require("../config/db");
 const fs = require("fs");
 const path = require("path");
 const cloudinary = require("cloudinary").v2;
@@ -30,31 +30,58 @@ async function deleteImage(imageUrl) {
   await cloudinary.uploader.destroy(publicId);
 }
 
-exports.getOneUser = (req, res, next) => {
-  const userId = req.params.id;
-  const sql = `SELECT id, username, email, is_admin FROM users WHERE id = $1`;
+// exports.getOneUser = (req, res, next) => {
+//   const userId = req.params.id;
+//   const sql = `SELECT id, username, email, is_admin FROM users WHERE id = $1`;
 
-  db.query(sql, [userId], (err, result) => {
-    // console.log("resultat :", result);
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
-    }
-    res.status(200).json(result.rows[0]);
-  });
+//   db.query(sql, [userId], (err, result) => {
+//     // console.log("resultat :", result);
+//     if (err) {
+//       res.status(404).json({ err });
+//       throw err;
+//     }
+//     res.status(200).json(result.rows[0]);
+//   });
+// };
+
+exports.getOneUser = (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+
+  const users = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../database/users.json"), "utf-8")
+  );
+
+  const user = users.find((u) => u.id === userId);
+
+  if (!user) {
+    return res.status(404).json({ message: "Utilisateur non trouvé" });
+  }
+
+  // Optionnel : ne retourner que certains champs (comme dans la requête SQL)
+  const { id, username, email, is_admin } = user;
+
+  res.status(200).json({ id, username, email, is_admin });
 };
 
-exports.getAllUsers = (req, res, next) => {
-  const sql = `SELECT id, username, email, attachment FROM users`;
+// exports.getAllUsers = (req, res, next) => {
+//   const sql = `SELECT id, username, email, attachment FROM users`;
 
-  db.query(sql, (err, result) => {
-    // console.log("liste user :", result);
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
-    }
-    res.status(200).json(result.rows);
-  });
+//   db.query(sql, (err, result) => {
+//     // console.log("liste user :", result);
+//     if (err) {
+//       res.status(404).json({ err });
+//       throw err;
+//     }
+//     res.status(200).json(result.rows);
+//   });
+// };
+
+exports.getAllUsers = (req, res) => {
+  const users = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../database/users.json"), "utf-8")
+  );
+
+  res.status(200).json(users);
 };
 
 exports.updateUser = (req, res, next) => {

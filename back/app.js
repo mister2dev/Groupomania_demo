@@ -21,4 +21,13 @@ app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/like", likeRoutes);
 
+app.use((req, res, next) => {
+  if (req.method !== "GET") {
+    return res
+      .status(403)
+      .json({ message: "Mode démo : écriture désactivée." });
+  }
+  next();
+});
+
 module.exports = app;

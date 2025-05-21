@@ -1,21 +1,20 @@
-const db = require("../config/db");
+// const db = require("../config/db");
 const cloudinary = require("../services/cloudinaryConfig");
 const { moderateText } = require("../services/moderationServicePerspective");
 const { moderateImage } = require("../services/moderationServiceClarifai");
+const fs = require("fs");
+const path = require("path");
 
 // Fonction utilitaire pour supprimer une image sur Cloudinary
 async function deleteImage(imageUrl) {
   const publicId = imageUrl.split("/").slice(-2).join("/").split(".")[0];
   await cloudinary.uploader.destroy(publicId);
 }
-
 async function moderateTextContent(content, res) {
   const moderationResult = await moderateText(content);
   console.log("Résultat de la modération :", moderationResult);
-
   toxicity =
     moderationResult.attributeScores?.TOXICITY?.summaryScore?.value ?? 0;
-
   if (toxicity > 0.3) {
     res.status(400).json({
       message: "Votre message contient un langage inapproprié.",
@@ -27,23 +26,23 @@ async function moderateTextContent(content, res) {
 
 // Fonction réutilisable de modération de l'image avec Clarifai
 async function moderateImageContent(imageUrl, res) {
-  try {
-    const isValidImage = await moderateImage(imageUrl);
-    if (!isValidImage) {
-      await deleteImage(imageUrl);
-      res.status(400).json({
-        message: "L'image n'est pas appropriée.",
-      });
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.error("Erreur lors de la validation de l'image :", error);
-    res
-      .status(500)
-      .json({ message: "Erreur lors de la validation de l'image." });
-    return false;
-  }
+  // try {
+  //   const isValidImage = await moderateImage(imageUrl);
+  //   if (!isValidImage) {
+  //     await deleteImage(imageUrl);
+  //     res.status(400).json({
+  //       message: "L'image n'est pas appropriée.",
+  //     });
+  //     return false;
+  //   }
+  //   return true;
+  // } catch (error) {
+  //   console.error("Erreur lors de la validation de l'image :", error);
+  //   res
+  //     .status(500)
+  //     .json({ message: "Erreur lors de la validation de l'image." });
+  //   return false;
+  // }
 }
 
 function deletePostFromDb(post_id, res) {
@@ -98,28 +97,48 @@ exports.createPost = async (req, res, next) => {
   }
 };
 
-exports.getAllPosts = (req, res, next) => {
-  const sql = "SELECT * FROM posts ORDER BY created_at DESC";
+// exports.getAllPosts = (req, res, next) => {
+//   const sql = "SELECT * FROM posts ORDER BY created_at DESC";
 
-  db.query(sql, (err, result) => {
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
-    }
-    res.status(200).json(result.rows);
-  });
+//   db.query(sql, (err, result) => {
+//     if (err) {
+//       res.status(404).json({ err });
+//       throw err;
+//     }
+//     res.status(200).json(result.rows);
+//   });
+// };
+
+exports.getAllPosts = (req, res) => {
+  const posts = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../database/posts.json"), "utf-8")
+  );
+
+  const reversedPosts = [...posts].reverse();
+
+  res.status(200).json(reversedPosts);
 };
 
-exports.getOnePost = (req, res, next) => {
-  const postId = req.params.id;
-  const sql = `SELECT * FROM posts WHERE id = ${postId};`;
-  db.query(sql, (err, result) => {
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
-    }
-    res.status(200).json(result.rows);
-  });
+// exports.getOnePost = (req, res, next) => {
+//   const postId = req.params.id;
+//   const sql = `SELECT * FROM posts WHERE id = ${postId};`;
+//   db.query(sql, (err, result) => {
+//     if (err) {
+//       res.status(404).json({ err });
+//       throw err;
+//     }
+//     res.status(200).json(result.rows);
+//   });
+// };
+
+exports.getOnePost = (req, res) => {
+  const post = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../database/posts.json"), "utf-8")
+  );
+
+  const reversedPost = [...post].reverse();
+
+  res.status(200).json(reversedPost);
 };
 
 exports.updatePost = async (req, res, next) => {
