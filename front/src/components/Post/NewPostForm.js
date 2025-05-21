@@ -166,6 +166,9 @@ const NewPostForm = ({ getPosts }) => {
               </div>
             )}
           </div>
+          <p>
+            Vous êtes en mode démo, vous ne pouvez pas modifier les données.
+          </p>
           <div className="btn-send">
             <button
               className="send"
