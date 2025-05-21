@@ -6,13 +6,13 @@ const checkUsername = require("../middlewares/username-validator");
 const checkEmail = require("../middlewares/email-validator");
 const checkPassword = require("../middlewares/password-validator");
 
-router.post(
-  "/signup",
-  checkUsername,
-  checkEmail,
-  checkPassword,
-  authCtrl.signup
-);
+// router.post(
+//   "/signup",
+//   checkUsername,
+//   checkEmail,
+//   checkPassword,
+//   authCtrl.signup
+// );
 router.post("/login", authCtrl.login);
 router.post("/desactivate/:id", auth, authCtrl.desactivateAccount);
 
