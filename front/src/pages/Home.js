@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Thread from "../components/Thread";
 import NewPostForm from "../components/Post/NewPostForm";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    Swal.fire({
+      title: "Version Démo",
+      text: "Bienvenue sur la version démo de Groupomania, vous ne pouvez pas modifier les données.",
+      icon: "info",
+      iconColor: "#DC645A",
+      confirmButtonText: "Compris",
+      confirmButtonColor: "#4e5166",
+      background: "#ffd0c4", // Fond rose pêche
+      backdrop: `
+        rgba(0, 0, 0, 0.4)
+      `,
+    });
+  }, []);
 
   // Récuperation de tous les posts
   const getPosts = (num) => {
