@@ -15,15 +15,6 @@ app.use(express.json());
 
 //-------Routes---------------
 
-// app.use((req, res, next) => {
-//   if (req.method !== "GET") {
-//     return res
-//       .status(403)
-//       .json({ message: "Mode démo : écriture désactivée." });
-//   }
-//   next();
-// });
-
 app.use((req, res, next) => {
   const allowedPaths = ["/api/auth/login"];
   if (req.method !== "GET" && !allowedPaths.includes(req.path)) {

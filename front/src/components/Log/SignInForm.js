@@ -59,53 +59,58 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="signin-container">
-      <form action="" onSubmit={handleLogin} id="sign-in-form" noValidate>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-          autoCapitalize="none"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-        <br />
-        <br />
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Mot de passe"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        <br />
-        <br />
-        <br />
-        <input type="submit" value="Suivant" />
-        <div className="signupError">{error}</div>
-      </form>
-      {/* Affichage du message d'erreur */}
+    <>
+      <p>
+        Vous êtes en mode démo, les identifiants sont bob@bob.fr et AZerty123
+      </p>
+      <div className="signin-container">
+        <form action="" onSubmit={handleLogin} id="sign-in-form" noValidate>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            autoCapitalize="none"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+          <br />
+          <br />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Mot de passe"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+          <br />
+          <br />
+          <br />
+          <input type="submit" value="Suivant" />
+          <div className="signupError">{error}</div>
+        </form>
+        {/* Affichage du message d'erreur */}
 
-      {/* Affichage du loader sous le formulaire */}
-      {loading && (
-        <Loader
-          message={
-            <>
-              Connexion en cours...
-              <br />
-              <br />
-              {showDelayMessage &&
-                `
+        {/* Affichage du loader sous le formulaire */}
+        {loading && (
+          <Loader
+            message={
+              <>
+                Connexion en cours...
+                <br />
+                <br />
+                {showDelayMessage &&
+                  `
               Le site étant hébergé sur un serveur gratuit qui se met en
               veille, il se peut que le chargement soit un peu long.
               `}
-            </>
-          }
-        />
-      )}
-    </div>
+              </>
+            }
+          />
+        )}
+      </div>
+    </>
   );
 };
 export default SignInForm;

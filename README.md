@@ -6,7 +6,13 @@ Le client Groupomania est un groupe spécialisé dans la grande distribution et 
 
 ![Image du site](back/images/sample.png)
 
-## Fonctionnalités implémentées
+## Fonctionnalités du mode demo
+
+- Cette demo repose sur une version mockée de l'application afin de ne pas dépendre d'une base de donnée payante
+- possibilité de se loguer
+- lecture des posts et commentaires fonctionnels
+
+## Fonctionnalités implémentées dans la version complète
 
 - Création d'utilisateurs (CRUD)
 - Les utilisateurs pourront
@@ -25,7 +31,7 @@ Le client Groupomania est un groupe spécialisé dans la grande distribution et 
 
 - Backend
   - Serveur **Node.js** avec Framework **Express**
-  - Base de Données **MySQL**
+  - Base de Données **MySQL** ou **PostgreSQL** en version deployée
   - **API REST**
 - Frontend
   - Framework **React**
