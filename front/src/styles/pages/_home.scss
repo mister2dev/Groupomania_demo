@@ -89,6 +89,18 @@
   background-size: cover;
   background-position-y: -350px;
 
+  .demo-notice {
+    background-color: #fff3cd; /* jaune clair type alert */
+    color: #856404; /* texte légèrement foncé */
+    border: 1px solid #ffeeba; /* bordure douce */
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px; /* espace avec le formulaire */
+    font-size: 0.9rem;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+
   @media screen and (max-width: 700px) {
     min-width: 350px;
     background-position-y: -60px;

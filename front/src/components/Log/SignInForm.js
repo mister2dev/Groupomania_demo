@@ -60,9 +60,9 @@ const SignInForm = () => {
 
   return (
     <>
-      <p>
-        Vous êtes en mode démo, les identifiants sont bob@bob.fr et AZerty123
-      </p>
+      <div className="demo-notice">
+        ⚠️ Version de démonstration – utilisez <strong>bob@bob.fr</strong> / <strong>AZerty123</strong> pour vous connecter.
+      </div>
       <div className="signin-container">
         <form action="" onSubmit={handleLogin} id="sign-in-form" noValidate>
           <input
