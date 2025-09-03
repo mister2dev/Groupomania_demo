@@ -31,7 +31,7 @@ Le client Groupomania est un groupe spécialisé dans la grande distribution et 
 
 - Backend
   - Serveur **Node.js** avec Framework **Express**
-  - Base de Données **MySQL** ou **PostgreSQL** en version deployée
+  - Base de Données **MySQL** (passage à **PostgreSQL** en version deployée)
   - **API REST**
 - Frontend
   - Framework **React**
@@ -53,6 +53,8 @@ Le client Groupomania est un groupe spécialisé dans la grande distribution et 
 - Mettre en place le frontend avec le framework React.
 
 ## Installation
+
+(La version de démonstration étant mockée, il n'est pas nécessaire de préparer la base de données MySQL.)
 
 ### **Préparer la base de données MySQL**
 
@@ -88,28 +90,23 @@ Use groupomania;
 
 ### Backend
 
-- Ajouter le fichier .env dans le dossier ./back/, avec les variables :
-
-```
-PORT=5000
-JWT_TOKEN=a0e141b8-e49c-43af-87fb-28542d6d83ff
-```
-
+- Ajouter le fichier .env dans le dossier ./back/, avec les variables de .env.exemple
 - Initialisation et démarrage du backend
 
 ```bash
 cd back
 npm install
-node server
+nodemon server
 ```
 
 ### Frontend
 
+- Ajouter le fichier .env dans le dossier ./front/, avec les variables de .env.exemple
 - Ouvrir un nouveau terminal
 - Initialisation et démarrage du frontend (React doit être installé sur la machine)
 
 ```bash
 cd front
-npm install
-yarn start # (ou npm start) Lancer le frontend
+npm install ou yarn install
+npm start (ou yarn start) pour lancer le frontend
 ```
